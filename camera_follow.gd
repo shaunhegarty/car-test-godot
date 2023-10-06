@@ -1,12 +1,11 @@
+@tool
 extends Camera3D
 
-@export var to_follow: Node
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	rotation.direction_to(to_follow.global_position)
+@export var marker_position: Node
+@export var follow_object: Node
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-	# rotation = rotation.direction_to(to_follow.global_position)
+func _physics_process(delta):
+	global_position = global_position.lerp(marker_position.global_position, 2 * delta)
+	look_at(follow_object.global_transform.origin, Vector3(0, 1, 0))

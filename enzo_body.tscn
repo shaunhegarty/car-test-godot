@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://c85r5gm8cc205"]
+
+[ext_resource type="PackedScene" uid="uid://cm11vvbwuu0d1" path="res://enzo_body.glb" id="1_jdk7v"]
+[ext_resource type="Material" uid="uid://4mo7r1tu2ve1" path="res://glass_material.tres" id="2_6xxu8"]
+
+[node name="enzo_body" instance=ExtResource("1_jdk7v")]
+
+[node name="FrontGrille" parent="Ferrari Enzo" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -270.553, -604.632, 594.806)
+
+[node name="RearWindow" parent="Ferrari Enzo" index="4"]
+surface_material_override/0 = ExtResource("2_6xxu8")
+
+[node name="SideSkirt" parent="Ferrari Enzo" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -270.553, -604.632, 594.806)
+surface_material_override/2 = ExtResource("2_6xxu8")
+
+[node name="Windsceren" parent="Ferrari Enzo" index="7"]
+surface_material_override/0 = ExtResource("2_6xxu8")

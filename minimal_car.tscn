@@ -64,7 +64,7 @@ dof_blur_far_distance = 11.54
 dof_blur_far_transition = 177.48
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_k7gn4"]
-size = Vector3(2, 1.6, 5)
+size = Vector3(4.06437, 1.6, 7.99196)
 
 [node name="Node3D" type="Node3D"]
 
@@ -120,73 +120,73 @@ transform = Transform3D(-0.962435, 0.257787, -0.0852396, 0.12941, 0.711516, 0.69
 shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("marker_position", "follow_object")]
-transform = Transform3D(-1, 1.99979e-05, -0.000210442, 0, 0.995515, 0.0946021, 0.00021139, 0.0946021, -0.995515, -0.00173808, 3.43526, -7.53203)
+transform = Transform3D(-1, 1.99979e-05, -0.000210442, 0, 0.995515, 0.0946018, 0.00021139, 0.0946018, -0.995515, -0.00173808, 3.43526, -7.53203)
 current = true
 fov = 60.0
 script = ExtResource("1_7pfkt")
-marker_position = NodePath("../VehicleBody3D/CameraLookAt/CameraLocation")
-follow_object = NodePath("../VehicleBody3D/CameraLookAt")
+marker_position = NodePath("../Ferrari Enzo/CameraLookAt/CameraLocation")
+follow_object = NodePath("../Ferrari Enzo/CameraLookAt")
 
-[node name="VehicleBody3D" type="VehicleBody3D" parent="."]
+[node name="Ferrari Enzo" type="VehicleBody3D" parent="."]
 mass = 2000.0
 script = ExtResource("2_rk0kk")
 
-[node name="enzo_body2" parent="VehicleBody3D" instance=ExtResource("4_mpda1")]
+[node name="enzo_body2" parent="Ferrari Enzo" instance=ExtResource("4_mpda1")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.00922419, 0.303658, 0.311346)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.43234, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ferrari Enzo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.43234, 0.231172)
 shape = SubResource("BoxShape3D_k7gn4")
 
-[node name="RearRight" type="VehicleWheel3D" parent="VehicleBody3D"]
+[node name="RearRight" type="VehicleWheel3D" parent="Ferrari Enzo"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1.03855, -2.57694)
 use_as_traction = true
 wheel_radius = 0.6
 suspension_stiffness = 50.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D/RearRight"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ferrari Enzo/RearRight"]
 transform = Transform3D(-3.49691e-08, 0, -0.8, 0, 0.8, 0, 0.8, 0, -3.49691e-08, -0.421476, 0, 0)
 mesh = ExtResource("3_bw50n")
 
-[node name="FrontRight" type="VehicleWheel3D" parent="VehicleBody3D"]
+[node name="FrontRight" type="VehicleWheel3D" parent="Ferrari Enzo"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1.03855, 2.61871)
 use_as_steering = true
 wheel_radius = 0.6
 suspension_stiffness = 50.0
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="VehicleBody3D/FrontRight"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Ferrari Enzo/FrontRight"]
 transform = Transform3D(-3.49691e-08, 0, -0.8, 0, 0.8, 0, 0.8, 0, -3.49691e-08, -0.299124, 0, 0)
 mesh = ExtResource("3_bw50n")
 
-[node name="FrontLeft" type="VehicleWheel3D" parent="VehicleBody3D"]
+[node name="FrontLeft" type="VehicleWheel3D" parent="Ferrari Enzo"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.03855, 2.61871)
 use_as_steering = true
 wheel_radius = 0.6
 suspension_stiffness = 50.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D/FrontLeft"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ferrari Enzo/FrontLeft"]
 transform = Transform3D(-3.49691e-08, 0, 0.8, 0, 0.8, 0, -0.8, 0, -3.49691e-08, 0.314862, 0, 0)
 mesh = ExtResource("3_bw50n")
 
-[node name="RearLeft" type="VehicleWheel3D" parent="VehicleBody3D"]
+[node name="RearLeft" type="VehicleWheel3D" parent="Ferrari Enzo"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.03855, -2.57694)
 use_as_traction = true
 wheel_radius = 0.6
 suspension_stiffness = 50.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D/RearLeft"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ferrari Enzo/RearLeft"]
 transform = Transform3D(-3.49691e-08, 0, 0.8, 0, 0.8, 0, -0.8, 0, -3.49691e-08, 0.384974, 0, 0)
 mesh = ExtResource("3_bw50n")
 
-[node name="CameraLookAt" type="Marker3D" parent="VehicleBody3D"]
+[node name="CameraLookAt" type="Marker3D" parent="Ferrari Enzo"]
 transform = Transform3D(1, 2.62885e-08, -1.70799e-07, -2.62885e-08, 0.999999, 5.96046e-08, 1.70799e-07, 8.9407e-08, 0.999999, -7.65512e-07, 2.65447, 0.684393)
 
-[node name="CameraLocation" type="Marker3D" parent="VehicleBody3D/CameraLookAt"]
+[node name="CameraLocation" type="Marker3D" parent="Ferrari Enzo/CameraLookAt"]
 transform = Transform3D(-1, -1.06581e-14, -8.74228e-08, -2.62885e-08, 0.953717, 0.300706, 8.33766e-08, 0.300706, -0.953718, -0.00173873, 0.780793, -8.21644)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("vehicle", "acceleration_spinner", "friction_spinner", "rest_spinner", "roll_influence_spinner", "stiffness_spinner", "max_force_spinner", "travel_spinner", "damping_compression_spinner", "damping_relaxation_spinner", "speed_label", "wheel_info_label", "reset_button", "wheels")]
 script = ExtResource("5_sovpm")
-vehicle = NodePath("../VehicleBody3D")
+vehicle = NodePath("../Ferrari Enzo")
 acceleration_spinner = NodePath("PanelContainer/MarginContainer/VBoxContainer/Acceleration/AccelerationSpinner")
 friction_spinner = NodePath("PanelContainer/MarginContainer/VBoxContainer/Friction/FrictionValueSpinner")
 rest_spinner = NodePath("PanelContainer/MarginContainer/VBoxContainer/RestLength/RestSpinner")
@@ -199,7 +199,7 @@ damping_relaxation_spinner = NodePath("PanelContainer/MarginContainer/VBoxContai
 speed_label = NodePath("Stats/MarginContainer/VBoxContainer/Speed")
 wheel_info_label = NodePath("Stats/MarginContainer/VBoxContainer/WheelRPM")
 reset_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/ResetButton")
-wheels = [NodePath("../VehicleBody3D/RearRight"), NodePath("../VehicleBody3D/FrontRight"), NodePath("../VehicleBody3D/FrontLeft"), NodePath("../VehicleBody3D/RearLeft")]
+wheels = [NodePath("../Ferrari Enzo/RearRight"), NodePath("../Ferrari Enzo/FrontRight"), NodePath("../Ferrari Enzo/FrontLeft"), NodePath("../Ferrari Enzo/RearLeft")]
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
 offset_right = 40.0

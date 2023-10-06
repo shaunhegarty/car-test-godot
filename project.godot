@@ -48,6 +48,10 @@ camera_rotate={
 ]
 }
 
+[physics]
+
+common/physics_ticks_per_second=360
+
 [rendering]
 
 anti_aliasing/quality/msaa_3d=2

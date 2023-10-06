@@ -25,6 +25,9 @@ func _input(event):
 		engine_force = 0
 	
 	if event.is_action_pressed("brake"):
-		brake = 50
+		if linear_velocity.length() > 1:
+			brake = 50
+		else:
+			engine_force = -acceleration_speed
 	if event.is_action_released("brake"):
 		brake = 0

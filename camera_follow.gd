@@ -14,14 +14,14 @@ func _ready():
 
 var rotate_camera = false
 
-func _input(event):
+func _unhandled_input(event):
 	if event is InputEventMouseButton and event.is_action_pressed("camera_rotate"):
 		rotate_camera = true
 	if event is InputEventMouseButton and event.is_action_released("camera_rotate"):
 		rotate_camera = false
 
 	if event is InputEventMouseMotion and rotate_camera:
-		follow_object.rotate_object_local(Vector3.UP, event.relative.x * 0.002)
+		follow_object.rotate_object_local(Vector3.UP, event.relative.x * -0.002)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):

@@ -25,12 +25,10 @@ extends CanvasLayer
 
 # Vehicle Initial State
 var initial_car_position: Vector3
-var initial_car_rotation: Vector3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	initial_car_position = vehicle.global_position
-	initial_car_rotation = vehicle.global_rotation
 
 	acceleration_spinner.value_changed.connect(update_acceleration)
 
@@ -77,10 +75,7 @@ func update_stats():
 
 
 func reset_car_position():
-	vehicle.global_position = initial_car_position
-	vehicle.global_rotation = initial_car_rotation
-	vehicle.angular_velocity = Vector3.ZERO
-	vehicle.linear_velocity = Vector3.ZERO
+	vehicle.reset_car.emit(initial_car_position)
 
 func _process(_delta):
 	update_stats()

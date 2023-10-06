@@ -1,13 +1,15 @@
 extends CanvasLayer
 
-@export var vehicle: VehicleBody3D
+@export var vehicle: Car
 
 # Vehicle parameter controls
+@export var acceleration_spinner: SpinBox
 @export var friction_spinner: SpinBox
-@export var stiffness_spinner: SpinBox
 @export var rest_spinner: SpinBox
-@export var travel_spinner: SpinBox
 @export var roll_influence_spinner: SpinBox
+@export var stiffness_spinner: SpinBox
+@export var max_force_spinner: SpinBox
+@export var travel_spinner: SpinBox
 @export var damping_compression_spinner: SpinBox
 @export var damping_relaxation_spinner: SpinBox
 
@@ -30,25 +32,34 @@ func _ready():
 	initial_car_position = vehicle.global_position
 	initial_car_rotation = vehicle.global_rotation
 
+	acceleration_spinner.value_changed.connect(update_acceleration)
+
 	friction_spinner.value_changed.connect(update_wheels)
-	stiffness_spinner.value_changed.connect(update_wheels)
 	rest_spinner.value_changed.connect(update_wheels)
-	travel_spinner.value_changed.connect(update_wheels)
 	roll_influence_spinner.value_changed.connect(update_wheels)
-	reset_button.pressed.connect(reset_car_position)
+	stiffness_spinner.value_changed.connect(update_wheels)
+	max_force_spinner.value_changed.connect(update_wheels)
+	travel_spinner.value_changed.connect(update_wheels)
 	damping_compression_spinner.value_changed.connect(update_wheels)
 	damping_relaxation_spinner.value_changed.connect(update_wheels)
+	
+	reset_button.pressed.connect(reset_car_position)
 
 	update_wheels()
+
+
+func update_acceleration(_update_value=null):
+	vehicle.acceleration_speed = acceleration_spinner.value
 
 
 func update_wheels(_update_value=null):
 	for wheel in wheels:
 		wheel.wheel_friction_slip = friction_spinner.value
 		wheel.wheel_rest_length = rest_spinner.value
-		wheel.suspension_stiffness = stiffness_spinner.value
-		wheel.suspension_travel = travel_spinner.value
 		wheel.wheel_roll_influence = roll_influence_spinner.value
+		wheel.suspension_stiffness = stiffness_spinner.value
+		wheel.suspension_max_force = max_force_spinner.value
+		wheel.suspension_travel = travel_spinner.value
 		wheel.damping_compression = damping_compression_spinner.value
 		wheel.damping_relaxation = damping_relaxation_spinner.value
 

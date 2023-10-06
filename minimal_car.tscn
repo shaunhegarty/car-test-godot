@@ -1,0 +1,349 @@
+[gd_scene load_steps=15 format=3 uid="uid://dx0fh7bawj65i"]
+
+[ext_resource type="Texture2D" uid="uid://ca47ltfrs2r6d" path="res://noise.tres" id="1_3xle4"]
+[ext_resource type="Script" path="res://camera_follow.gd" id="1_7pfkt"]
+[ext_resource type="Script" path="res://car.gd" id="2_rk0kk"]
+[ext_resource type="ArrayMesh" uid="uid://cidkj4lpla424" path="res://wheel.tres" id="3_bw50n"]
+[ext_resource type="PackedScene" uid="uid://c85r5gm8cc205" path="res://enzo_body.tscn" id="4_mpda1"]
+[ext_resource type="Script" path="res://car_stat_controller.gd" id="5_sovpm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lyunk"]
+size = Vector3(1000, 1, 1000)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bo0g4"]
+albedo_color = Color(0.309804, 0.309804, 0.309804, 1)
+albedo_texture = ExtResource("1_3xle4")
+normal_enabled = true
+normal_scale = 0.6
+normal_texture = ExtResource("1_3xle4")
+clearcoat_enabled = true
+clearcoat = 0.24
+clearcoat_roughness = 0.13
+clearcoat_texture = ExtResource("1_3xle4")
+ao_enabled = true
+heightmap_texture = ExtResource("1_3xle4")
+subsurf_scatter_strength = 0.14
+uv1_scale = Vector3(100, 100, 100)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_uodlc"]
+material = SubResource("StandardMaterial3D_bo0g4")
+size = Vector2(1000, 1000)
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_33g8c"]
+rayleigh_coefficient = 1.0
+rayleigh_color = Color(0.12549, 0.403922, 0.6, 1)
+turbidity = 0.0
+
+[sub_resource type="Sky" id="Sky_vdeot"]
+sky_material = SubResource("PhysicalSkyMaterial_33g8c")
+
+[sub_resource type="Environment" id="Environment_27v4j"]
+background_mode = 2
+background_energy_multiplier = 3.53
+sky = SubResource("Sky_vdeot")
+ambient_light_color = Color(0.101961, 0.219608, 0.376471, 1)
+ssr_enabled = true
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_energy = 0.5
+fog_light_energy = 1.17
+fog_density = 0.0
+volumetric_fog_density = 0.01
+adjustment_enabled = true
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_8apjm"]
+dof_blur_far_distance = 11.54
+dof_blur_far_transition = 177.48
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k7gn4"]
+size = Vector3(2, 1.6, 5)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_lyunk")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("PlaneMesh_uodlc")
+
+[node name="World" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
+environment = SubResource("Environment_27v4j")
+camera_attributes = SubResource("CameraAttributesPractical_8apjm")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
+transform = Transform3D(-0.962435, 0.257787, -0.0852396, 0.12941, 0.711516, 0.69065, 0.23869, 0.653675, -0.718148, -8, 12.7683, 4)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("to_follow")]
+transform = Transform3D(0.702479, 0.332672, -0.629168, 0.0392928, 0.864553, 0.501003, 0.710619, -0.376666, 0.594259, -4.90829, 4.538, 9.97541)
+current = true
+script = ExtResource("1_7pfkt")
+to_follow = NodePath("../VehicleBody3D")
+
+[node name="VehicleBody3D" type="VehicleBody3D" parent="."]
+mass = 2000.0
+script = ExtResource("2_rk0kk")
+
+[node name="enzo_body2" parent="VehicleBody3D" instance=ExtResource("4_mpda1")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.00922419, 0.303658, 0.311346)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.43234, 0)
+shape = SubResource("BoxShape3D_k7gn4")
+
+[node name="RearRight" type="VehicleWheel3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1.03855, -2.57694)
+use_as_traction = true
+wheel_radius = 0.6
+suspension_stiffness = 50.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D/RearRight"]
+transform = Transform3D(-3.49691e-08, 0, -0.8, 0, 0.8, 0, 0.8, 0, -3.49691e-08, -0.421476, 0, 0)
+mesh = ExtResource("3_bw50n")
+
+[node name="FrontRight" type="VehicleWheel3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1.03855, 2.61871)
+use_as_steering = true
+wheel_radius = 0.6
+suspension_stiffness = 50.0
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="VehicleBody3D/FrontRight"]
+transform = Transform3D(-3.49691e-08, 0, -0.8, 0, 0.8, 0, 0.8, 0, -3.49691e-08, -0.299124, 0, 0)
+mesh = ExtResource("3_bw50n")
+
+[node name="FrontLeft" type="VehicleWheel3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.03855, 2.61871)
+use_as_steering = true
+wheel_radius = 0.6
+suspension_stiffness = 50.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D/FrontLeft"]
+transform = Transform3D(-3.49691e-08, 0, 0.8, 0, 0.8, 0, -0.8, 0, -3.49691e-08, 0.314862, 0, 0)
+mesh = ExtResource("3_bw50n")
+
+[node name="RearLeft" type="VehicleWheel3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.03855, -2.57694)
+use_as_traction = true
+wheel_radius = 0.6
+suspension_stiffness = 50.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D/RearLeft"]
+transform = Transform3D(-3.49691e-08, 0, 0.8, 0, 0.8, 0, -0.8, 0, -3.49691e-08, 0.384974, 0, 0)
+mesh = ExtResource("3_bw50n")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("vehicle", "acceleration_spinner", "friction_spinner", "rest_spinner", "roll_influence_spinner", "stiffness_spinner", "max_force_spinner", "travel_spinner", "damping_compression_spinner", "damping_relaxation_spinner", "speed_label", "wheel_info_label", "reset_button", "wheels")]
+script = ExtResource("5_sovpm")
+vehicle = NodePath("../VehicleBody3D")
+acceleration_spinner = NodePath("PanelContainer/MarginContainer/VBoxContainer/Acceleration/AccelerationSpinner")
+friction_spinner = NodePath("PanelContainer/MarginContainer/VBoxContainer/Friction/FrictionValueSpinner")
+rest_spinner = NodePath("PanelContainer/MarginContainer/VBoxContainer/RestLength/RestSpinner")
+roll_influence_spinner = NodePath("PanelContainer/MarginContainer/VBoxContainer/RollInfluence/Roll Spinner")
+stiffness_spinner = NodePath("PanelContainer/MarginContainer/VBoxContainer/Stiffness/StiffnessSpinner")
+max_force_spinner = NodePath("PanelContainer/MarginContainer/VBoxContainer/MaxForce/MaxForceSpinner")
+travel_spinner = NodePath("PanelContainer/MarginContainer/VBoxContainer/Travel/TravelSpinner")
+damping_compression_spinner = NodePath("PanelContainer/MarginContainer/VBoxContainer/DampingCompressoin/Spinner")
+damping_relaxation_spinner = NodePath("PanelContainer/MarginContainer/VBoxContainer/DampingRelaxation/Spinner")
+speed_label = NodePath("Stats/MarginContainer/VBoxContainer/Speed")
+wheel_info_label = NodePath("Stats/MarginContainer/VBoxContainer/WheelRPM")
+reset_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/ResetButton")
+wheels = [NodePath("../VehicleBody3D/RearRight"), NodePath("../VehicleBody3D/FrontRight"), NodePath("../VehicleBody3D/FrontLeft"), NodePath("../VehicleBody3D/RearLeft")]
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Acceleration" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AccelerationLabel" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/Acceleration"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.86
+text = "Acceleration
+"
+
+[node name="AccelerationSpinner" type="SpinBox" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/Acceleration"]
+layout_mode = 2
+min_value = -3000.0
+max_value = 100000.0
+step = 100.0
+value = 2500.0
+
+[node name="Friction" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="FrictionLabel" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/Friction"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.86
+text = "Friction Slip
+"
+
+[node name="FrictionValueSpinner" type="SpinBox" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/Friction"]
+layout_mode = 2
+step = 0.1
+value = 1.0
+
+[node name="RestLength" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="RestLabel" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/RestLength"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.86
+text = "Rest Length
+"
+
+[node name="RestSpinner" type="SpinBox" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/RestLength"]
+layout_mode = 2
+max_value = 2.0
+step = 0.01
+value = 0.1
+
+[node name="RollInfluence" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="RollLabel" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/RollInfluence"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.86
+text = "Roll Influence
+"
+
+[node name="Roll Spinner" type="SpinBox" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/RollInfluence"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.8
+
+[node name="Stiffness" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="StiffnessLabel" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/Stiffness"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.86
+text = "Stiffness
+"
+
+[node name="StiffnessSpinner" type="SpinBox" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/Stiffness"]
+layout_mode = 2
+max_value = 1000.0
+value = 50.0
+
+[node name="MaxForce" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MaxForceLabel" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/MaxForce"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.86
+text = "Max Force"
+
+[node name="MaxForceSpinner" type="SpinBox" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/MaxForce"]
+layout_mode = 2
+max_value = 100000.0
+step = 100.0
+value = 12000.0
+
+[node name="Travel" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TravelLabel" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/Travel"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.86
+text = "Travel
+"
+
+[node name="TravelSpinner" type="SpinBox" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/Travel"]
+layout_mode = 2
+max_value = 2.0
+step = 0.01
+value = 0.25
+
+[node name="DampingCompressoin" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/DampingCompressoin"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.86
+text = "Damp. Comp.
+"
+
+[node name="Spinner" type="SpinBox" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/DampingCompressoin"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.83
+
+[node name="DampingRelaxation" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/DampingRelaxation"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.86
+text = "Damp. Rel.
+"
+
+[node name="Spinner" type="SpinBox" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/DampingRelaxation"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.88
+
+[node name="ResetButton" type="Button" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Reset Car Position"
+
+[node name="Stats" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Stats"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Stats/MarginContainer"]
+layout_mode = 2
+
+[node name="Speed" type="Label" parent="CanvasLayer/Stats/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Speed: "
+
+[node name="WheelRPM" type="Label" parent="CanvasLayer/Stats/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Wheel 1 RPM"

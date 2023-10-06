@@ -84,7 +84,7 @@ transform = Transform3D(-1, 1.99979e-05, -0.000210442, 0, 0.995515, 0.0946021, 0
 current = true
 fov = 60.0
 script = ExtResource("1_7pfkt")
-marker_position = NodePath("../VehicleBody3D/CameraLocation")
+marker_position = NodePath("../VehicleBody3D/CameraLookAt/CameraLocation")
 follow_object = NodePath("../VehicleBody3D/CameraLookAt")
 
 [node name="VehicleBody3D" type="VehicleBody3D" parent="."]
@@ -138,11 +138,11 @@ suspension_stiffness = 50.0
 transform = Transform3D(-3.49691e-08, 0, 0.8, 0, 0.8, 0, -0.8, 0, -3.49691e-08, 0.384974, 0, 0)
 mesh = ExtResource("3_bw50n")
 
-[node name="CameraLocation" type="Marker3D" parent="VehicleBody3D"]
-transform = Transform3D(-1, -2.62885e-08, 8.33765e-08, 0, 0.953717, 0.300706, -8.74228e-08, 0.300706, -0.953716, -0.00173808, 3.43526, -7.53204)
-
 [node name="CameraLookAt" type="Marker3D" parent="VehicleBody3D"]
 transform = Transform3D(1, 2.62885e-08, -1.70799e-07, -2.62885e-08, 0.999999, 5.96046e-08, 1.70799e-07, 8.9407e-08, 0.999999, -7.65512e-07, 2.65447, 0.684393)
+
+[node name="CameraLocation" type="Marker3D" parent="VehicleBody3D/CameraLookAt"]
+transform = Transform3D(-1, -1.06581e-14, -8.74228e-08, -2.62885e-08, 0.953717, 0.300706, 8.33766e-08, 0.300706, -0.953718, -0.00173873, 0.780793, -8.21644)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("vehicle", "acceleration_spinner", "friction_spinner", "rest_spinner", "roll_influence_spinner", "stiffness_spinner", "max_force_spinner", "travel_spinner", "damping_compression_spinner", "damping_relaxation_spinner", "speed_label", "wheel_info_label", "reset_button", "wheels")]
 script = ExtResource("5_sovpm")

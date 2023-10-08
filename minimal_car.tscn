@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dx0fh7bawj65i"]
+[gd_scene load_steps=24 format=3 uid="uid://dx0fh7bawj65i"]
 
 [ext_resource type="Texture2D" uid="uid://ca47ltfrs2r6d" path="res://noise.tres" id="1_3xle4"]
 [ext_resource type="Script" path="res://camera_follow.gd" id="1_7pfkt"]
@@ -53,6 +53,10 @@ ambient_light_color = Color(0.101961, 0.219608, 0.376471, 1)
 ssr_enabled = true
 ssao_enabled = true
 ssil_enabled = true
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+sdfgi_cascades = 8
+sdfgi_min_cell_size = 0.70495
 sdfgi_energy = 0.5
 fog_light_energy = 1.17
 fog_density = 0.0
@@ -81,6 +85,10 @@ albedo_color = Color(1, 0.572549, 0, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_nupxf"]
 material = SubResource("StandardMaterial3D_plx8x")
 size = Vector3(5, 5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kgpbs"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_cuntk"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -200,11 +208,12 @@ transform = Transform3D(1, 2.62885e-08, -1.70799e-07, -2.62885e-08, 0.999999, 5.
 [node name="CameraLocation" type="Marker3D" parent="Ferrari Enzo/CameraLookAt"]
 transform = Transform3D(-1, -1.06581e-14, -8.74228e-08, -2.62885e-08, 0.953717, 0.300706, 8.33766e-08, 0.300706, -0.953718, -0.00173873, 0.780793, -8.21644)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("vehicle", "acceleration_spinner", "friction_spinner", "rest_spinner", "roll_influence_spinner", "stiffness_spinner", "max_force_spinner", "travel_spinner", "damping_compression_spinner", "damping_relaxation_spinner", "speed_label", "wheel_info_label", "reset_button", "wheels")]
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("vehicle", "acceleration_spinner", "friction_spinner", "balance_slider", "rest_spinner", "roll_influence_spinner", "stiffness_spinner", "max_force_spinner", "travel_spinner", "damping_compression_spinner", "damping_relaxation_spinner", "speed_label", "wheel_info_label", "balance_label_front", "balance_label_rear", "reset_button", "front_wheels", "rear_wheels")]
 script = ExtResource("5_sovpm")
 vehicle = NodePath("../Ferrari Enzo")
 acceleration_spinner = NodePath("PanelContainer/MarginContainer/VBoxContainer/Acceleration/AccelerationSpinner")
 friction_spinner = NodePath("PanelContainer/MarginContainer/VBoxContainer/Friction/FrictionValueSpinner")
+balance_slider = NodePath("PanelContainer/MarginContainer/VBoxContainer/GripBalance/MarginContainer/HBoxContainer/VBoxContainer/BalanceSlider")
 rest_spinner = NodePath("PanelContainer/MarginContainer/VBoxContainer/RestLength/RestSpinner")
 roll_influence_spinner = NodePath("PanelContainer/MarginContainer/VBoxContainer/RollInfluence/Roll Spinner")
 stiffness_spinner = NodePath("PanelContainer/MarginContainer/VBoxContainer/Stiffness/StiffnessSpinner")
@@ -214,8 +223,11 @@ damping_compression_spinner = NodePath("PanelContainer/MarginContainer/VBoxConta
 damping_relaxation_spinner = NodePath("PanelContainer/MarginContainer/VBoxContainer/DampingRelaxation/Spinner")
 speed_label = NodePath("Stats/MarginContainer/VBoxContainer/Speed")
 wheel_info_label = NodePath("Stats/MarginContainer/VBoxContainer/WheelRPM")
+balance_label_front = NodePath("PanelContainer/MarginContainer/VBoxContainer/GripBalance/MarginContainer/HBoxContainer/VBoxContainer2/ForwardBalance")
+balance_label_rear = NodePath("PanelContainer/MarginContainer/VBoxContainer/GripBalance/MarginContainer/HBoxContainer/VBoxContainer2/RearBalance")
 reset_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/ResetButton")
-wheels = [NodePath("../Ferrari Enzo/RearRight"), NodePath("../Ferrari Enzo/FrontRight"), NodePath("../Ferrari Enzo/FrontLeft"), NodePath("../Ferrari Enzo/RearLeft")]
+front_wheels = [NodePath("../Ferrari Enzo/FrontLeft"), NodePath("../Ferrari Enzo/FrontRight")]
+rear_wheels = [NodePath("../Ferrari Enzo/RearLeft"), NodePath("../Ferrari Enzo/RearRight")]
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
 offset_right = 40.0
@@ -247,7 +259,7 @@ layout_mode = 2
 min_value = -3000.0
 max_value = 100000.0
 step = 100.0
-value = 2500.0
+value = 12000.0
 
 [node name="Friction" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -264,6 +276,53 @@ text = "Friction Slip
 layout_mode = 2
 step = 0.1
 value = 1.0
+
+[node name="GripBalance" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/GripBalance"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/GripBalance/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/GripBalance/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FrictionLabel" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/GripBalance/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.86
+text = "Balance
+"
+horizontal_alignment = 1
+
+[node name="BalanceSlider" type="HSlider" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/GripBalance/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/GripBalance/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+alignment = 2
+
+[node name="ForwardBalance" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/GripBalance/MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "0.7
+"
+horizontal_alignment = 2
+
+[node name="RearBalance" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/GripBalance/MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "0.3"
+horizontal_alignment = 2
 
 [node name="RestLength" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -581,3 +640,125 @@ shape = SubResource("BoxShape3D_jemg3")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Town/Ramp3"]
 transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
 mesh = SubResource("BoxMesh_nupxf")
+
+[node name="Wall" type="Node3D" parent="."]
+
+[node name="Box" type="RigidBody3D" parent="Wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.574716, 1.6161, 45.0396)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/Box"]
+shape = SubResource("BoxShape3D_kgpbs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall/Box"]
+mesh = SubResource("BoxMesh_cuntk")
+
+[node name="Box2" type="RigidBody3D" parent="Wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.10354, 0.502489, 45.0396)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/Box2"]
+shape = SubResource("BoxShape3D_kgpbs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall/Box2"]
+mesh = SubResource("BoxMesh_cuntk")
+
+[node name="Box3" type="RigidBody3D" parent="Wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0212522, 0.502489, 45.0396)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/Box3"]
+shape = SubResource("BoxShape3D_kgpbs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall/Box3"]
+mesh = SubResource("BoxMesh_cuntk")
+
+[node name="Box4" type="RigidBody3D" parent="Wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.16258, 0.502489, 45.0396)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/Box4"]
+shape = SubResource("BoxShape3D_kgpbs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall/Box4"]
+mesh = SubResource("BoxMesh_cuntk")
+
+[node name="Box5" type="RigidBody3D" parent="Wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.67232, 1.61286, 45.0396)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/Box5"]
+shape = SubResource("BoxShape3D_kgpbs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall/Box5"]
+mesh = SubResource("BoxMesh_cuntk")
+
+[node name="Box6" type="RigidBody3D" parent="Wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0837, 2.70343, 45.0396)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/Box6"]
+shape = SubResource("BoxShape3D_kgpbs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall/Box6"]
+mesh = SubResource("BoxMesh_cuntk")
+
+[node name="Box7" type="RigidBody3D" parent="Wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.80906, 1.6161, 45.0396)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/Box7"]
+shape = SubResource("BoxShape3D_kgpbs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall/Box7"]
+mesh = SubResource("BoxMesh_cuntk")
+
+[node name="Box8" type="RigidBody3D" parent="Wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.33788, 0.502489, 45.0396)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/Box8"]
+shape = SubResource("BoxShape3D_kgpbs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall/Box8"]
+mesh = SubResource("BoxMesh_cuntk")
+
+[node name="Box9" type="RigidBody3D" parent="Wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2556, 0.502489, 45.0396)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/Box9"]
+shape = SubResource("BoxShape3D_kgpbs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall/Box9"]
+mesh = SubResource("BoxMesh_cuntk")
+
+[node name="Box10" type="RigidBody3D" parent="Wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.28476, 2.73613, 45.0396)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/Box10"]
+shape = SubResource("BoxShape3D_kgpbs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall/Box10"]
+mesh = SubResource("BoxMesh_cuntk")
+
+[node name="Box11" type="RigidBody3D" parent="Wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.75732, 1.61286, 45.0396)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/Box11"]
+shape = SubResource("BoxShape3D_kgpbs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall/Box11"]
+mesh = SubResource("BoxMesh_cuntk")
+
+[node name="Box12" type="RigidBody3D" parent="Wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.19731, 2.70343, 45.0396)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/Box12"]
+shape = SubResource("BoxShape3D_kgpbs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall/Box12"]
+mesh = SubResource("BoxMesh_cuntk")

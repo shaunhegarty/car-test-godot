@@ -1,27 +1,29 @@
 class_name Car extends VehicleBody3D
 
-signal reset_car(target_position: Vector3)
+signal reset_car(p_transform: Transform3D )
+signal handbrake(p_active: bool )
 
 var acceleration_speed = 2500
 var BRAKE_FORCE = 20
 
 var resetting = false
-var reset_position = Vector3(0, 0, 0)
+var reset_transform: = Transform3D()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	reset_car.connect(reset_to_position)
+	reset_car.connect(reset_transform_to_initial)
 
 
-func reset_to_position(target_position):
+func reset_transform_to_initial(target_transform: Transform3D):
 	resetting = true
-	reset_position = target_position
+	reset_transform = target_transform
+
 
 
 func _integrate_forces(state):
 	if resetting:
 		resetting = false
-		state.transform.origin = reset_position
+		state.transform = reset_transform
 
 func _physics_process(delta):
 	if Input.is_action_pressed("turn_right"):
@@ -45,3 +47,8 @@ func _unhandled_input(event):
 			engine_force = -acceleration_speed
 	if event.is_action_released("brake"):
 		brake = 0
+	
+	if event.is_action_pressed("handbrake"):
+		handbrake.emit(true)
+	if event.is_action_released("handbrake"):
+		handbrake.emit(false)

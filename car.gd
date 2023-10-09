@@ -52,3 +52,8 @@ func _unhandled_input(event):
 		handbrake.emit(true)
 	if event.is_action_released("handbrake"):
 		handbrake.emit(false)
+	
+	if event.is_action_pressed("ui_cancel") or event.is_action_pressed("ui_accept"):
+		var focus_owner = get_viewport().gui_get_focus_owner()
+		if focus_owner:
+			focus_owner.release_focus()

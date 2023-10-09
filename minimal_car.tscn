@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dx0fh7bawj65i"]
+[gd_scene load_steps=25 format=3 uid="uid://dx0fh7bawj65i"]
 
 [ext_resource type="Texture2D" uid="uid://ca47ltfrs2r6d" path="res://noise.tres" id="1_3xle4"]
 [ext_resource type="Script" path="res://camera_follow.gd" id="1_7pfkt"]
@@ -75,6 +75,10 @@ dof_blur_far_transition = 177.48
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_g2la3"]
 points = PackedVector3Array(-2.35607, 0.593801, -1.90892, -0.668687, 1.18965, -0.891675, 0.515516, 1.21255, -0.891675, 3.97697, 0.606042, -1.90892, -1.57315, -0.752676, -1.90892, -3.93709, -0.752676, -1.58155, -4.22845, -0.215072, -1.58155, -4.75933, -0.215072, 0, -2.59648, 0.593801, 0, -0.668687, 1.24118, 0, 0.756825, 1.26428, 0, 4.33804, 0.657769, 0, 4.37021, -0.0748963, 0, 3.97697, -0.582688, -1.90892, -1.57315, -0.752676, 1.90892, -4.46886, -0.752676, 0, -4.22845, -0.215072, 1.58117, -2.35607, 0.593801, 1.90892, -0.668687, 1.18965, 0.891301, 0.515516, 1.21255, 0.891301, 3.97697, 0.606042, 1.90892, 3.97697, -0.582688, 1.90892, -3.93709, -0.752676, 1.58117)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vxqad"]
+radius = 0.389969
+height = 2.07559
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j4no0"]
 size = Vector3(40, 40, 40)
@@ -175,10 +179,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.53674e-07, 0.776431, -0.66
 [node name="enzo_body2" parent="Ferrari Enzo" instance=ExtResource("4_mpda1")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.00922419, 0.303658, 0.311346)
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Ferrari Enzo"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.31393, 0.371344)
-shape = SubResource("ConvexPolygonShape3D_g2la3")
-
 [node name="RearLeft" type="VehicleWheel3D" parent="Ferrari Enzo"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.85492, 1.08688, -2.57694)
 use_as_traction = true
@@ -224,6 +224,18 @@ transform = Transform3D(1, 2.62885e-08, -1.70799e-07, -2.62885e-08, 0.999999, 5.
 
 [node name="CameraLocation" type="Marker3D" parent="Ferrari Enzo/CameraLookAt"]
 transform = Transform3D(-1, -1.06581e-14, -8.74228e-08, -2.62885e-08, 0.953717, 0.300706, 8.33766e-08, 0.300706, -0.953718, -0.00173873, 0.780793, -8.21644)
+
+[node name="MainBodyMesh" type="CollisionShape3D" parent="Ferrari Enzo"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.31393, 0.371344)
+shape = SubResource("ConvexPolygonShape3D_g2la3")
+
+[node name="FrontLeftCollision" type="CollisionShape3D" parent="Ferrari Enzo"]
+transform = Transform3D(-4.37114e-08, -0.950462, -0.310842, 1, -4.1546e-08, -1.35873e-08, 0, -0.310842, 0.950462, -0.666152, 0.919446, 4.56408)
+shape = SubResource("CapsuleShape3D_vxqad")
+
+[node name="FrontRightCollision2" type="CollisionShape3D" parent="Ferrari Enzo"]
+transform = Transform3D(-4.15484e-08, -0.950516, 0.310676, 1, -4.37114e-08, 0, 1.35801e-08, 0.310676, 0.950516, 0.648535, 0.919446, 4.56806)
+shape = SubResource("CapsuleShape3D_vxqad")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("vehicle", "acceleration_spinner", "friction_spinner", "balance_slider", "rest_spinner", "roll_influence_spinner", "stiffness_spinner", "max_force_spinner", "travel_spinner", "damping_compression_spinner", "damping_relaxation_spinner", "speed_label", "wheel_info_label", "balance_label_front", "balance_label_rear", "reset_button")]
 script = ExtResource("5_sovpm")

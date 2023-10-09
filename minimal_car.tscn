@@ -152,7 +152,7 @@ directional_shadow_fade_start = 1.0
 directional_shadow_max_distance = 500.0
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("marker_position", "follow_object")]
-transform = Transform3D(-1, 1.99987e-05, -0.000210442, 0, 0.995515, 0.0946057, 0.00021139, 0.0946057, -0.995515, -0.00173807, 3.43526, -37.9492)
+transform = Transform3D(-1, 1.99993e-05, -0.000210442, 0, 0.995515, 0.0946084, 0.00021139, 0.0946084, -0.995515, -0.00173807, 3.18209, -37.9492)
 current = true
 fov = 60.0
 script = ExtResource("1_7pfkt")
@@ -161,7 +161,7 @@ follow_object = NodePath("../Ferrari Enzo/CameraLookAt")
 max_distance = 3
 
 [node name="Ferrari Enzo" type="VehicleBody3D" parent="." node_paths=PackedStringArray("center_of_mass_marker", "front_wheels", "rear_wheels")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30.4175)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.253196, -30.4175)
 mass = 2000.0
 center_of_mass_mode = 1
 script = ExtResource("2_rk0kk")
@@ -179,44 +179,44 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.0092
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.43234, 0.231172)
 shape = SubResource("BoxShape3D_k7gn4")
 
-[node name="RearRight" type="VehicleWheel3D" parent="Ferrari Enzo"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1.08688, -2.57694)
-use_as_traction = true
-wheel_radius = 0.63
-suspension_stiffness = 50.0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ferrari Enzo/RearRight"]
-transform = Transform3D(-3.49691e-08, 0, -0.8, 0, 0.8, 0, 0.8, 0, -3.49691e-08, -0.421476, 0, 0)
-mesh = ExtResource("3_bw50n")
-
-[node name="FrontRight" type="VehicleWheel3D" parent="Ferrari Enzo"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1.03855, 2.61871)
-use_as_steering = true
-wheel_radius = 0.63
-suspension_stiffness = 50.0
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Ferrari Enzo/FrontRight"]
-transform = Transform3D(-3.49691e-08, 0, -0.8, 0, 0.8, 0, 0.8, 0, -3.49691e-08, -0.299124, 0, 0)
-mesh = ExtResource("3_bw50n")
-
-[node name="FrontLeft" type="VehicleWheel3D" parent="Ferrari Enzo"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.03855, 2.61871)
-use_as_steering = true
-wheel_radius = 0.63
-suspension_stiffness = 50.0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ferrari Enzo/FrontLeft"]
-transform = Transform3D(-3.49691e-08, 0, 0.8, 0, 0.8, 0, -0.8, 0, -3.49691e-08, 0.314862, 0, 0)
-mesh = ExtResource("3_bw50n")
-
 [node name="RearLeft" type="VehicleWheel3D" parent="Ferrari Enzo"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.08688, -2.57694)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.85492, 1.08688, -2.57694)
 use_as_traction = true
 wheel_radius = 0.63
 suspension_stiffness = 50.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ferrari Enzo/RearLeft"]
-transform = Transform3D(-3.49691e-08, 0, 0.8, 0, 0.8, 0, -0.8, 0, -3.49691e-08, 0.384974, 0, 0)
+transform = Transform3D(-3.49691e-08, 0, 0.8, 0, 0.8, 0, -0.8, 0, -3.49691e-08, 0.0165277, 0, 0)
+mesh = ExtResource("3_bw50n")
+
+[node name="RearRight" type="VehicleWheel3D" parent="Ferrari Enzo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.855, 1.087, -2.577)
+use_as_traction = true
+wheel_radius = 0.63
+suspension_stiffness = 50.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ferrari Enzo/RearRight"]
+transform = Transform3D(-3.49691e-08, 0, -0.8, 0, 0.8, 0, 0.8, 0, -3.49691e-08, -0.0297489, 0, 0)
+mesh = ExtResource("3_bw50n")
+
+[node name="FrontLeft" type="VehicleWheel3D" parent="Ferrari Enzo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.85492, 1.03855, 2.61871)
+use_as_steering = true
+wheel_radius = 0.63
+suspension_stiffness = 50.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ferrari Enzo/FrontLeft"]
+transform = Transform3D(-3.49691e-08, 0, 0.8, 0, 0.8, 0, -0.8, 0, -3.49691e-08, -0.0535843, 0, 0)
+mesh = ExtResource("3_bw50n")
+
+[node name="FrontRight" type="VehicleWheel3D" parent="Ferrari Enzo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.855, 1.039, 2.619)
+use_as_steering = true
+wheel_radius = 0.63
+suspension_stiffness = 50.0
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Ferrari Enzo/FrontRight"]
+transform = Transform3D(-3.49691e-08, 0, -0.8, 0, 0.8, 0, 0.8, 0, -3.49691e-08, 0.092603, 0, 0)
 mesh = ExtResource("3_bw50n")
 
 [node name="CameraLookAt" type="Marker3D" parent="Ferrari Enzo"]
@@ -290,7 +290,7 @@ text = "Friction Slip
 [node name="FrictionValueSpinner" type="SpinBox" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/Friction"]
 layout_mode = 2
 step = 0.1
-value = 0.9
+value = 1.0
 
 [node name="GripBalance" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -321,7 +321,7 @@ horizontal_alignment = 1
 layout_mode = 2
 max_value = 1.0
 step = 0.01
-value = 0.45
+value = 0.5
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/GripBalance/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(40, 0)

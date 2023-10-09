@@ -30,9 +30,12 @@ func _unhandled_input(event):
 func _physics_process(delta):
 
 	var distance = global_position.distance_to(marker_position.global_position)
-	var speed_multiplier = max((distance ** max_distance_smoothness) / (max_distance ** max_distance_smoothness), 2)
-	global_position = global_position.lerp(marker_position.global_position, speed_multiplier * delta)
-	look_at(follow_object.global_transform.origin, Vector3(0, 1, 0))
+	if distance / max_distance > 2:
+		global_position = marker_position.global_position
+	else:
+		var speed_multiplier = max((distance ** max_distance_smoothness) / (max_distance ** max_distance_smoothness), 2)
+		global_position = global_position.lerp(marker_position.global_position, speed_multiplier * delta)
+		look_at(follow_object.global_transform.origin, Vector3(0, 1, 0))
 
 	if not rotate_camera:
 		follow_object.transform.basis = follow_object_initial_transform.basis

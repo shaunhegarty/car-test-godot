@@ -1,9 +1,9 @@
 class_name Car extends VehicleBody3D
 
-signal reset_car(p_transform: Transform3D )
 signal values_updated
 
 # Vehicle Parts
+@export var center_of_mass_marker: Marker3D
 @export var front_wheels: Array[VehicleWheel3D] = []
 @export var rear_wheels: Array[VehicleWheel3D] = []
 
@@ -17,17 +17,19 @@ var grip_balance = 0.5
 var friction_slip = 1.0
 
 var resetting = false
-var reset_transform: = Transform3D()
+var reset_origin: Vector3
+var reset_basis: Basis
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	reset_car.connect(reset_transform_to_initial)
+	reset_origin = transform.origin
+	reset_basis = transform.basis
+	center_of_mass = center_of_mass_marker.position
 
 
-func reset_transform_to_initial(target_transform: Transform3D):
+func reset_car():
 	resetting = true
-	reset_transform = target_transform
 
 
 func set_wheel_rest_length(p_length: float ):
@@ -127,8 +129,12 @@ func get_rear_balance() -> float:
 
 func _integrate_forces(state):
 	if resetting:
+		print("Attempting to reset")
+		state.linear_velocity = Vector3.ZERO
+		state.angular_velocity = Vector3.ZERO		
+		state.transform.origin = reset_origin
+		state.transform.basis = reset_basis
 		resetting = false
-		state.transform = reset_transform
 
 func _physics_process(delta):
 	if Input.is_action_pressed("turn_right"):

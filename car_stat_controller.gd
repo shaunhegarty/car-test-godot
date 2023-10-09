@@ -82,7 +82,7 @@ func update_stats():
 
 
 func reset_car_position():
-	vehicle.reset_car.emit(initial_car_position)
+	vehicle.reset_car()
 
 func _process(_delta):
 	update_stats()

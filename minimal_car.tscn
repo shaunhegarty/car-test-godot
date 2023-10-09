@@ -73,8 +73,8 @@ adjustment_enabled = true
 dof_blur_far_distance = 11.54
 dof_blur_far_transition = 177.48
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_k7gn4"]
-size = Vector3(4.06437, 1.6, 7.99196)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_g2la3"]
+points = PackedVector3Array(-2.35607, 0.593801, -1.90892, -0.668687, 1.18965, -0.891675, 0.515516, 1.21255, -0.891675, 3.97697, 0.606042, -1.90892, -1.57315, -0.752676, -1.90892, -3.93709, -0.752676, -1.58155, -4.22845, -0.215072, -1.58155, -4.75933, -0.215072, 0, -2.59648, 0.593801, 0, -0.668687, 1.24118, 0, 0.756825, 1.26428, 0, 4.33804, 0.657769, 0, 4.37021, -0.0748963, 0, 3.97697, -0.582688, -1.90892, -1.57315, -0.752676, 1.90892, -4.46886, -0.752676, 0, -4.22845, -0.215072, 1.58117, -2.35607, 0.593801, 1.90892, -0.668687, 1.18965, 0.891301, 0.515516, 1.21255, 0.891301, 3.97697, 0.606042, 1.90892, 3.97697, -0.582688, 1.90892, -3.93709, -0.752676, 1.58117)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j4no0"]
 size = Vector3(40, 40, 40)
@@ -175,9 +175,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.53674e-07, 0.776431, -0.66
 [node name="enzo_body2" parent="Ferrari Enzo" instance=ExtResource("4_mpda1")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.00922419, 0.303658, 0.311346)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ferrari Enzo"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.43234, 0.231172)
-shape = SubResource("BoxShape3D_k7gn4")
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Ferrari Enzo"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.31393, 0.371344)
+shape = SubResource("ConvexPolygonShape3D_g2la3")
 
 [node name="RearLeft" type="VehicleWheel3D" parent="Ferrari Enzo"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.85492, 1.08688, -2.57694)

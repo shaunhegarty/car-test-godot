@@ -151,9 +151,11 @@ script = ExtResource("1_7pfkt")
 marker_position = NodePath("../Ferrari Enzo/CameraLookAt/CameraLocation")
 follow_object = NodePath("../Ferrari Enzo/CameraLookAt")
 
-[node name="Ferrari Enzo" type="VehicleBody3D" parent="."]
+[node name="Ferrari Enzo" type="VehicleBody3D" parent="." node_paths=PackedStringArray("front_wheels", "rear_wheels")]
 mass = 2000.0
 script = ExtResource("2_rk0kk")
+front_wheels = [NodePath("FrontRight"), NodePath("FrontLeft")]
+rear_wheels = [NodePath("RearRight"), NodePath("RearLeft")]
 
 [node name="enzo_body2" parent="Ferrari Enzo" instance=ExtResource("4_mpda1")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.00922419, 0.303658, 0.311346)
@@ -208,7 +210,7 @@ transform = Transform3D(1, 2.62885e-08, -1.70799e-07, -2.62885e-08, 0.999999, 5.
 [node name="CameraLocation" type="Marker3D" parent="Ferrari Enzo/CameraLookAt"]
 transform = Transform3D(-1, -1.06581e-14, -8.74228e-08, -2.62885e-08, 0.953717, 0.300706, 8.33766e-08, 0.300706, -0.953718, -0.00173873, 0.780793, -8.21644)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("vehicle", "acceleration_spinner", "friction_spinner", "balance_slider", "rest_spinner", "roll_influence_spinner", "stiffness_spinner", "max_force_spinner", "travel_spinner", "damping_compression_spinner", "damping_relaxation_spinner", "speed_label", "wheel_info_label", "balance_label_front", "balance_label_rear", "reset_button", "front_wheels", "rear_wheels")]
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("vehicle", "acceleration_spinner", "friction_spinner", "balance_slider", "rest_spinner", "roll_influence_spinner", "stiffness_spinner", "max_force_spinner", "travel_spinner", "damping_compression_spinner", "damping_relaxation_spinner", "speed_label", "wheel_info_label", "balance_label_front", "balance_label_rear", "reset_button")]
 script = ExtResource("5_sovpm")
 vehicle = NodePath("../Ferrari Enzo")
 acceleration_spinner = NodePath("PanelContainer/MarginContainer/VBoxContainer/Acceleration/AccelerationSpinner")
@@ -226,8 +228,6 @@ wheel_info_label = NodePath("Stats/MarginContainer/VBoxContainer/WheelRPM")
 balance_label_front = NodePath("PanelContainer/MarginContainer/VBoxContainer/GripBalance/MarginContainer/HBoxContainer/VBoxContainer2/ForwardBalance")
 balance_label_rear = NodePath("PanelContainer/MarginContainer/VBoxContainer/GripBalance/MarginContainer/HBoxContainer/VBoxContainer2/RearBalance")
 reset_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/ResetButton")
-front_wheels = [NodePath("../Ferrari Enzo/FrontLeft"), NodePath("../Ferrari Enzo/FrontRight")]
-rear_wheels = [NodePath("../Ferrari Enzo/RearLeft"), NodePath("../Ferrari Enzo/RearRight")]
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
 offset_right = 40.0

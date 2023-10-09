@@ -84,7 +84,6 @@ func set_grip_balance(p_grip_balance: float):
 	set_wheel_friction()
 
 func set_friction_slip(p_friction_slip: float):
-	print("setting friction slip from %.1f to: %.1f "% [friction_slip, p_friction_slip])
 	friction_slip = p_friction_slip
 	set_wheel_friction()
 

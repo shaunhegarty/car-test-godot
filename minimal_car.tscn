@@ -150,6 +150,7 @@ fov = 60.0
 script = ExtResource("1_7pfkt")
 marker_position = NodePath("../Ferrari Enzo/CameraLookAt/CameraLocation")
 follow_object = NodePath("../Ferrari Enzo/CameraLookAt")
+max_distance = 3
 
 [node name="Ferrari Enzo" type="VehicleBody3D" parent="." node_paths=PackedStringArray("front_wheels", "rear_wheels")]
 mass = 2000.0

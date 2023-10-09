@@ -4,6 +4,9 @@ extends Camera3D
 @export var marker_position: Node3D
 @export var follow_object: Node3D
 
+@export var max_distance = 5
+@export var max_distance_smoothness = 4
+
 
 var follow_object_initial_transform: Transform3D
 
@@ -21,11 +24,14 @@ func _unhandled_input(event):
 		rotate_camera = false
 
 	if event is InputEventMouseMotion and rotate_camera:
-		follow_object.rotate_object_local(Vector3.UP, event.relative.x * -0.002)
+		follow_object.rotate_object_local(Vector3.UP, event.relative.x * -0.003)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	global_position = global_position.lerp(marker_position.global_position, 2 * delta)
+
+	var distance = global_position.distance_to(marker_position.global_position)
+	var speed_multiplier = max((distance ** max_distance_smoothness) / (max_distance ** max_distance_smoothness), 2)
+	global_position = global_position.lerp(marker_position.global_position, speed_multiplier * delta)
 	look_at(follow_object.global_transform.origin, Vector3(0, 1, 0))
 
 	if not rotate_camera:

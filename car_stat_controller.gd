@@ -36,10 +36,8 @@ func _ready():
 	initial_car_position = vehicle.global_transform
 
 	acceleration_spinner.value_changed.connect(update_acceleration)
-
 	friction_spinner.value_changed.connect(update_wheels)
 	balance_slider.value_changed.connect(update_wheels)
-
 	rest_spinner.value_changed.connect(update_wheels)
 	roll_influence_spinner.value_changed.connect(update_wheels)
 	stiffness_spinner.value_changed.connect(update_wheels)

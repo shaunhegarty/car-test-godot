@@ -2,6 +2,8 @@ class_name Car extends VehicleBody3D
 
 signal values_updated
 
+@export var steering_timer: Timer
+
 # Vehicle Parts
 @export var center_of_mass_marker: Marker3D
 @export var front_wheels: Array[VehicleWheel3D] = []
@@ -26,6 +28,7 @@ func _ready():
 	reset_origin = transform.origin
 	reset_basis = transform.basis
 	center_of_mass = center_of_mass_marker.position
+	steering_timer.timeout.connect(reset_steering)
 
 
 func reset_car():
@@ -138,12 +141,17 @@ func _integrate_forces(state):
 
 func _physics_process(delta):
 	if Input.is_action_pressed("turn_right"):
-		steering = lerp(steering, -0.6, delta * 3)
+		steering = lerpf(steering, -0.6, delta * 3)
+		steering_timer.start(1)
 	if Input.is_action_pressed("turn_left"):
-		steering = lerp(steering, 0.6, delta * 3)
-	if not Input.is_action_pressed("turn_right") and not Input.is_action_pressed("turn_left"):
-		steering = lerp(steering, 0.0, delta * 3)
+		steering = lerpf(steering, 0.6, delta * 3)
+		steering_timer.start(1)
+	if not Input.is_action_pressed("turn_right") and not Input.is_action_pressed("turn_left"):		
+		steering = lerpf(steering, 0.0, delta * 6)
 
+
+func reset_steering():
+	steering = 0
 
 func _unhandled_input(event):
 	if event.is_action_pressed("accelerate"):

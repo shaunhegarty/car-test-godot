@@ -78,7 +78,7 @@ points = PackedVector3Array(-2.35607, 0.593801, -1.90892, -0.668687, 1.18965, -0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vxqad"]
 radius = 0.389969
-height = 2.07559
+height = 2.19957
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j4no0"]
 size = Vector3(40, 40, 40)
@@ -156,7 +156,7 @@ directional_shadow_fade_start = 1.0
 directional_shadow_max_distance = 500.0
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("marker_position", "follow_object")]
-transform = Transform3D(-1, 1.99993e-05, -0.000210442, 0, 0.995515, 0.0946084, 0.00021139, 0.0946084, -0.995515, -0.00173807, 3.18209, -37.9492)
+transform = Transform3D(-1, 1.99993e-05, -0.000210442, 0, 0.995515, 0.0946084, 0.00021139, 0.0946084, -0.995515, -0.00173807, 3.07568, -37.9492)
 current = true
 fov = 60.0
 script = ExtResource("1_7pfkt")
@@ -164,17 +164,24 @@ marker_position = NodePath("../Ferrari Enzo/CameraLookAt/CameraLocation")
 follow_object = NodePath("../Ferrari Enzo/CameraLookAt")
 max_distance = 3
 
-[node name="Ferrari Enzo" type="VehicleBody3D" parent="." node_paths=PackedStringArray("center_of_mass_marker", "front_wheels", "rear_wheels")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.253196, -30.4175)
+[node name="Ferrari Enzo" type="VehicleBody3D" parent="." node_paths=PackedStringArray("steering_timer", "center_of_mass_marker", "front_wheels", "rear_wheels")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.359607, -30.4175)
 mass = 2000.0
 center_of_mass_mode = 1
 script = ExtResource("2_rk0kk")
+steering_timer = NodePath("SteeringTimer")
 center_of_mass_marker = NodePath("CoM")
 front_wheels = [NodePath("FrontRight"), NodePath("FrontLeft")]
 rear_wheels = [NodePath("RearRight"), NodePath("RearLeft")]
 
 [node name="CoM" type="Marker3D" parent="Ferrari Enzo"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.53674e-07, 0.776431, -0.664891)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.53674e-07, 0.776431, -0.495337)
+
+[node name="CameraLookAt" type="Marker3D" parent="Ferrari Enzo"]
+transform = Transform3D(1, 2.62885e-08, -1.70799e-07, -2.62885e-08, 0.999999, 5.96046e-08, 1.70799e-07, 8.9407e-08, 0.999999, -7.65512e-07, 2.65447, 0.684393)
+
+[node name="CameraLocation" type="Marker3D" parent="Ferrari Enzo/CameraLookAt"]
+transform = Transform3D(-1, -1.06581e-14, -8.74228e-08, -2.62885e-08, 0.953717, 0.300706, 8.33766e-08, 0.300706, -0.953718, -0.00173873, 0.780793, -8.21644)
 
 [node name="enzo_body2" parent="Ferrari Enzo" instance=ExtResource("4_mpda1")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.00922419, 0.303658, 0.311346)
@@ -219,12 +226,6 @@ suspension_stiffness = 50.0
 transform = Transform3D(-3.49691e-08, 0, -0.8, 0, 0.8, 0, 0.8, 0, -3.49691e-08, 0.092603, 0, 0)
 mesh = ExtResource("3_bw50n")
 
-[node name="CameraLookAt" type="Marker3D" parent="Ferrari Enzo"]
-transform = Transform3D(1, 2.62885e-08, -1.70799e-07, -2.62885e-08, 0.999999, 5.96046e-08, 1.70799e-07, 8.9407e-08, 0.999999, -7.65512e-07, 2.65447, 0.684393)
-
-[node name="CameraLocation" type="Marker3D" parent="Ferrari Enzo/CameraLookAt"]
-transform = Transform3D(-1, -1.06581e-14, -8.74228e-08, -2.62885e-08, 0.953717, 0.300706, 8.33766e-08, 0.300706, -0.953718, -0.00173873, 0.780793, -8.21644)
-
 [node name="MainBodyMesh" type="CollisionShape3D" parent="Ferrari Enzo"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.31393, 0.371344)
 shape = SubResource("ConvexPolygonShape3D_g2la3")
@@ -236,6 +237,8 @@ shape = SubResource("CapsuleShape3D_vxqad")
 [node name="FrontRightCollision2" type="CollisionShape3D" parent="Ferrari Enzo"]
 transform = Transform3D(-4.15484e-08, -0.950516, 0.310676, 1, -4.37114e-08, 0, 1.35801e-08, 0.310676, 0.950516, 0.648535, 0.919446, 4.56806)
 shape = SubResource("CapsuleShape3D_vxqad")
+
+[node name="SteeringTimer" type="Timer" parent="Ferrari Enzo"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("vehicle", "acceleration_spinner", "friction_spinner", "balance_slider", "rest_spinner", "roll_influence_spinner", "stiffness_spinner", "max_force_spinner", "travel_spinner", "damping_compression_spinner", "damping_relaxation_spinner", "speed_label", "wheel_info_label", "balance_label_front", "balance_label_rear", "reset_button")]
 script = ExtResource("5_sovpm")

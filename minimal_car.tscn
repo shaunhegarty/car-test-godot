@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dx0fh7bawj65i"]
+[gd_scene load_steps=26 format=3 uid="uid://dx0fh7bawj65i"]
 
 [ext_resource type="Texture2D" uid="uid://ca47ltfrs2r6d" path="res://noise.tres" id="1_3xle4"]
 [ext_resource type="Script" path="res://camera_follow.gd" id="1_7pfkt"]
@@ -6,6 +6,7 @@
 [ext_resource type="ArrayMesh" uid="uid://cidkj4lpla424" path="res://wheel.tres" id="3_bw50n"]
 [ext_resource type="PackedScene" uid="uid://c85r5gm8cc205" path="res://enzo_body.tscn" id="4_mpda1"]
 [ext_resource type="Script" path="res://car_stat_controller.gd" id="5_sovpm"]
+[ext_resource type="PackedScene" uid="uid://luem31yspx7m" path="res://road.glb" id="7_7gp0j"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lyunk"]
 size = Vector3(1000, 1, 1000)
@@ -87,14 +88,14 @@ size = Vector3(40, 40, 40)
 size = Vector3(40, 40, 40)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jemg3"]
-size = Vector3(5, 5, 1)
+size = Vector3(20, 20, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_plx8x"]
 albedo_color = Color(1, 0.572549, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_nupxf"]
 material = SubResource("StandardMaterial3D_plx8x")
-size = Vector3(5, 5, 1)
+size = Vector3(20, 20, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kgpbs"]
 
@@ -132,15 +133,15 @@ transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 6.8884
 shape = SubResource("CapsuleShape3D_uhu7h")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00255871, 1.84575e-15, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.175576, 0, 0)
 mesh = SubResource("CapsuleMesh_13pok")
 
 [node name="CollisionShape3D5" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 6.45159e-08, -1.47595, 122.87)
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 6.51744e-08, -1.49102, 122.87)
 shape = SubResource("CapsuleShape3D_uhu7h")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00255871, 1.84575e-15, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.345022, 0, 0)
 mesh = SubResource("CapsuleMesh_13pok")
 
 [node name="World" type="Node3D" parent="."]
@@ -156,7 +157,7 @@ directional_shadow_fade_start = 1.0
 directional_shadow_max_distance = 500.0
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("marker_position", "follow_object")]
-transform = Transform3D(-1, 1.99993e-05, -0.000210442, 0, 0.995515, 0.0946084, 0.00021139, 0.0946084, -0.995515, -0.00173807, 3.07568, -37.9492)
+transform = Transform3D(-1, 1.6073e-05, -0.000169143, 0, 0.995515, 0.0946, 0.000169905, 0.0946, -0.995515, 45.9883, 14.7334, -31.0487)
 current = true
 fov = 60.0
 script = ExtResource("1_7pfkt")
@@ -165,7 +166,7 @@ follow_object = NodePath("../Ferrari Enzo/CameraLookAt")
 max_distance = 3
 
 [node name="Ferrari Enzo" type="VehicleBody3D" parent="." node_paths=PackedStringArray("steering_timer", "center_of_mass_marker", "front_wheels", "rear_wheels")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.359607, -30.4175)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.9897, 11.2981, -23.5165)
 mass = 2000.0
 center_of_mass_mode = 1
 script = ExtResource("2_rk0kk")
@@ -504,7 +505,7 @@ text = "Wheel 1 RPM"
 [node name="Town" type="Node3D" parent="."]
 
 [node name="SquareBuilding" type="StaticBody3D" parent="Town"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.6626, 19.8812, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.4877, 19.8812, -42.0636)
 metadata/_edit_group_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Town/SquareBuilding"]
@@ -515,7 +516,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00876677, 0)
 mesh = SubResource("BoxMesh_cs4ot")
 
 [node name="SquareBuilding2" type="StaticBody3D" parent="Town"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.6626, -8.46383, 40.0517)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.6626, -8.46383, 46.2524)
 metadata/_edit_group_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Town/SquareBuilding2"]
@@ -537,7 +538,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00876677, 0)
 mesh = SubResource("BoxMesh_cs4ot")
 
 [node name="SquareBuilding4" type="StaticBody3D" parent="Town"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.1087, 16.2265, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -77.1862, 16.2265, 45.0587)
 metadata/_edit_group_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Town/SquareBuilding4"]
@@ -548,7 +549,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00876677, 0)
 mesh = SubResource("BoxMesh_cs4ot")
 
 [node name="SquareBuilding5" type="StaticBody3D" parent="Town"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.1087, -1.01542, 40.0517)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.1087, -1.01542, 45.7025)
 metadata/_edit_group_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Town/SquareBuilding5"]
@@ -668,6 +669,18 @@ transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 
 shape = SubResource("BoxShape3D_jemg3")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Town/Ramp3"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+mesh = SubResource("BoxMesh_nupxf")
+
+[node name="Ramp4" type="StaticBody3D" parent="Town"]
+transform = Transform3D(-0.561439, -0.0447701, -0.826306, -0.0733071, 0.9973, -0.00422572, 0.824264, 0.0582016, -0.563205, 139.095, 2.80974, 92.9923)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Town/Ramp4"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+shape = SubResource("BoxShape3D_jemg3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Town/Ramp4"]
 transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
 mesh = SubResource("BoxMesh_nupxf")
 
@@ -792,3 +805,6 @@ shape = SubResource("BoxShape3D_kgpbs")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Wall/Box12"]
 mesh = SubResource("BoxMesh_cuntk")
+
+[node name="road" parent="." instance=ExtResource("7_7gp0j")]
+transform = Transform3D(1, 0, 0, 0, 1, -0.000418879, 0, 0.000418879, 1, -18.4817, 11.2281, 77.9723)
